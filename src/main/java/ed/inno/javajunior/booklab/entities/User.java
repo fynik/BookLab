@@ -43,4 +43,12 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "book_id", nullable = false))
     private List<Book> bookshelf = new ArrayList<>();
+
+    public boolean isAdmin() {
+        return roles.stream().map(Role::getName).anyMatch(name -> name.equals("ROLE_ADMIN"));
+    }
+
+    public boolean isModer() {
+        return roles.stream().map(Role::getName).anyMatch(name -> name.equals("ROLE_MODER"));
+    }
 }

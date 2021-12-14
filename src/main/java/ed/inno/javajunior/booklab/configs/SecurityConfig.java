@@ -1,6 +1,6 @@
 package ed.inno.javajunior.booklab.configs;
 
-import ed.inno.javajunior.booklab.services.UserService;
+import ed.inno.javajunior.booklab.services.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -13,24 +13,31 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private UserService userDetailsService;
+    private CustomUserDetailsService userDetailsService;
 
     @Autowired
-    public void setUserDetailsService(UserService userDetailsService) {
+    public void setUserDetailsService(CustomUserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/signUp", "/signIn").permitAll()
+                .antMatchers("/", "/registration", "/static/**", "/images/**").permitAll()
                 .antMatchers("/profile/**").authenticated()
                 .antMatchers("/moder/**").hasAnyRole("MODER", "ADMIN")
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .and()
                 .formLogin()
+                .loginPage("/login")
+                .permitAll()
                 .and()
-                .logout().logoutSuccessUrl("/");
+                .logout()
+                .logoutSuccessUrl("/")
+                .permitAll()
+                .and()
+                .csrf().disable();
+
     }
 
     @Bean
