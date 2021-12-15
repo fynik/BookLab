@@ -22,6 +22,8 @@ public class News {
 
     private LocalDateTime published;
 
+    private String title;
+
     @Column(length = 65535)
     private String content;
 

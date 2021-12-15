@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +27,8 @@ public class Author {
     @Column(name = "last_name", length = 100)
     private String lastName;
 
-    private LocalDate birthdate;
+    @Column(name = "birth_year")
+    private Integer birthYear;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "file_id")

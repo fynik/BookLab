@@ -1,7 +1,8 @@
 package ed.inno.javajunior.booklab.services.fileutility;
 
 
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -10,22 +11,19 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import java.nio.file.Paths;
-import java.util.Objects;
 
-@Component
+
+@Service
 public class FileUtilServiceImpl implements FileUtilService {
 
-    @Override
-    public Boolean checkFileTypeIsImage(MultipartFile multipartFile) {
-        return Objects.equals(multipartFile.getContentType(), "image/jpeg") || Objects.equals(multipartFile.getContentType(), "image/png");
-    }
+    @Value("${files.images.storage.path}")
+    private String imageStorageFolder;
 
     @Override
     public void saveFileToDisk(MultipartFile multipartFile, int maxSize, String fileName) {
         try {
             BufferedImage bufferedImage = checkAndResizeImage(multipartFile, maxSize);
-            String storageFolder = "Z:\\Prog\\Innopolis\\BookLab\\filestorage\\images\\";
-            ImageIO.write(bufferedImage, "png", Paths.get(storageFolder, fileName).toFile());
+            ImageIO.write(bufferedImage, "png", Paths.get(imageStorageFolder, fileName).toFile());
         } catch (
                 IOException e) {
             e.printStackTrace();

@@ -13,12 +13,9 @@
 
         <h5>Добавить изображение (в формате jpg или png)</h5>
         <div class="input-group mb-3">
-            <input type="file" class="form-control" id="inputGroupFile02" name="file">
+            <input type="file" class="form-control" id="inputGroupFile02" name="file" accept=".png, .jpg, .jpeg">
             <label class="input-group-text" for="inputGroupFile02">Загрузить</label>
         </div>
-        <#if errorMessage??>
-            <h5 style="color: red">${errorMessage}</h5>
-        </#if>
         <button type="submit" style="width: 100%" class="btn btn-dark">Добавить новость</button>
     </form>
 </@t.template>

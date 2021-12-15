@@ -29,6 +29,9 @@ public class File {
     @Column(name = "mime_type")
     private String mimeType;
 
+    @Column(name = "file_size")
+    private Long fileSize;
+
     private LocalDateTime uploaded;
 
 }

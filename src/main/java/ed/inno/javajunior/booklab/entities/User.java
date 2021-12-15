@@ -51,4 +51,8 @@ public class User {
     public boolean isModer() {
         return roles.stream().map(Role::getName).anyMatch(name -> name.equals("ROLE_MODER"));
     }
+
+    public boolean bookshelfIsEmpty() {
+        return bookshelf.isEmpty();
+    }
 }

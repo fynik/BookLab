@@ -17,12 +17,6 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/")
-    public String homePage(Principal principal, Model model) {
-        model.addAttribute("user", userService.getUserByPrincipal(principal));
-        return "index";
-    }
-
     @GetMapping("/login")
     public String login(Principal principal, Model model) {
         model.addAttribute("user", userService.getUserByPrincipal(principal));
