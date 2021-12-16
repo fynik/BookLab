@@ -1,0 +1,21 @@
+.el-hover:hover {
+    transition: 0.5s;
+    transform: scale(1.05);
+}
+
+img {
+    object-fit: contain;
+}
+
+.ntd{
+    color: #000 !important;
+    text-decoration: none;
+}
+.news-body {
+    display: flex;
+}
+
+.news-body-element {
+    flex: initial;
+    margin: 10px;
+}
