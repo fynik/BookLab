@@ -25,7 +25,7 @@
                 <th><a href="/author/${author.id}">Подробная информация</a></th>
             </tr>
         <#else>
-            <h3>Книг нет</h3>
+            <h3>Авторов нет</h3>
         </#list>
     </table>
 </@t.template>

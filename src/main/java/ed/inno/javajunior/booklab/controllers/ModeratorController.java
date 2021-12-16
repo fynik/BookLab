@@ -76,7 +76,7 @@ public class ModeratorController {
     @PostMapping("/moder/book_add")
     public String submitBook(@RequestParam("title") String title,
                              @RequestParam("description") String description,
-                             @RequestParam("pub_year") Integer pub_year,
+                             @RequestParam("pub_year") String pub_year,
                              @RequestParam("author") Long id,
                              @RequestParam("file") MultipartFile multipartFile,
                              Principal principal, Model model) {
@@ -113,7 +113,7 @@ public class ModeratorController {
     @PostMapping("/moder/author_add")
     public String submitAuthor(@RequestParam("fname") String firstName,
                                @RequestParam("lname") String lastName,
-                               @RequestParam("birth_year") Integer birthYear,
+                               @RequestParam("birth_year") String birthYear,
                                @RequestParam("file") MultipartFile multipartFile,
                                Principal principal, Model model) {
         if (!fileUtil.checkFileTypeIsImage(multipartFile)) {
@@ -135,5 +135,11 @@ public class ModeratorController {
     public String deleteAuthor(@PathVariable("id") Long id) {
         authorService.deleteAuthorById(id);
         return "redirect:/moder/author_del";
+    }
+
+    @GetMapping("/error-file")
+    public String fileError(Principal principal, Model model) {
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
+        return "error-file";
     }
 }

@@ -29,7 +29,7 @@
 
         <div class="form-group">
             <label for="pub_year">Год издания</label>
-            <input type="number" class="form-control" required step="1" id="pub_year" name="pub_year">
+            <input type="text" class="form-control"  maxlength="4" id="pub_year" name="pub_year">
         </div>
 
         <h5>Добавить изображение (в формате jpg или png)</h5>

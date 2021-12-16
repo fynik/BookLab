@@ -8,7 +8,7 @@
         <br>
         <br>
         <img src="/images/${author.photo.storageName}"
-             style="border-radius: 5px">
+             style="border-radius: 5px" alt="Фото автора">
         <br>
         <br>
         <h4>${author.lastName}</h4>

@@ -28,8 +28,8 @@ public class Book {
     @Column(length = 65535)
     private String description;
 
-    @Column(name = "publ_year")
-    private Integer publishedYear;
+    @Column(name = "publ_year", length = 4)
+    private String publishedYear;
 
     @Column(name = "addition_date")
     private LocalDateTime additionDate;
@@ -41,7 +41,7 @@ public class Book {
     @JoinColumn(name = "file_id")
     private File cover;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "bookshelf")
     private List<User> readers = new ArrayList<>();
 
 

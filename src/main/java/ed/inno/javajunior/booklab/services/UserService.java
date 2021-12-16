@@ -1,22 +1,28 @@
 package ed.inno.javajunior.booklab.services;
 
+import ed.inno.javajunior.booklab.entities.Book;
 import ed.inno.javajunior.booklab.entities.User;
+import ed.inno.javajunior.booklab.repositories.BookRepository;
 import ed.inno.javajunior.booklab.repositories.RoleRepository;
 import ed.inno.javajunior.booklab.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final BookRepository bookRepository;
     private final PasswordEncoder passwordEncoder;
 
     public User getUserByPrincipal(Principal principal) {
@@ -41,9 +47,36 @@ public class UserService {
         user.setEmail(regParams.get("email"));
         user.setPassword(passwordEncoder.encode(regParams.get("password")));
         user.getRoles().add(roleRepository.findByName("ROLE_USER").
-                orElseThrow(() -> new UsernameNotFoundException("В системе не установлена роль пользователя")));
+                orElseThrow(() -> new NoSuchElementException("В системе не установлена роль пользователя")));
         userRepository.save(user);
         return true;
     }
 
+    public void deleteUser(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(NoSuchElementException::new);
+        userRepository.delete(user);
+        log.info("Пользователь " + user.getUsername() + " удален");
+    }
+
+
+    public void addBookToUser(Principal principal, Long bookId) {
+        User user = getUserByPrincipal(principal);
+        Book book = bookRepository.findById(bookId).orElseThrow(NoSuchElementException::new);
+        user.getBookshelf().add(book);
+        userRepository.save(user);
+        log.info(String.format("На полку пользователя %s добавлена книга %s", user.getUsername(), book.getTitle()));
+    }
+
+    public void removeBookFromUser(Principal principal, Long bookId) {
+        User user = getUserByPrincipal(principal);
+        Book book = bookRepository.findById(bookId).orElseThrow(NoSuchElementException::new);
+        user.getBookshelf().remove(book);
+        userRepository.save(user);
+        log.info(String.format("С полки пользователя %s удалена книга %s", user.getUsername(), book.getTitle()));
+    }
+
+    public Boolean userHasBook(Principal principal, Book book) {
+        User user = getUserByPrincipal(principal);
+        return user.getBookshelf().contains(book);
+    }
 }
