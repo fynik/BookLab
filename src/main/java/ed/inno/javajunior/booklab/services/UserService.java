@@ -29,7 +29,11 @@ public class UserService {
 
     public boolean createUser(Map<String, String> regParams) {
         String username = regParams.get("username");
+        String email = regParams.get("email");
         if (userRepository.findByUsername(username).isPresent()) {
+            return false;
+        }
+        if (userRepository.findByEmail(email).isPresent()) {
             return false;
         }
         User user = new User();

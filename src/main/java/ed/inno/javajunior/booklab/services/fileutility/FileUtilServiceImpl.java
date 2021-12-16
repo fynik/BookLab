@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import java.nio.file.Paths;
+import java.util.Objects;
 
 
 @Service
@@ -20,10 +21,20 @@ public class FileUtilServiceImpl implements FileUtilService {
     private String imageStorageFolder;
 
     @Override
+    public Boolean checkFileTypeIsImage(MultipartFile multipartFile) {
+        return Objects.equals(multipartFile.getContentType(), "image/jpeg") || Objects.equals(multipartFile.getContentType(), "image/png");
+    }
+
+    @Override
     public void saveFileToDisk(MultipartFile multipartFile, int maxSize, String fileName) {
         try {
             BufferedImage bufferedImage = checkAndResizeImage(multipartFile, maxSize);
-            ImageIO.write(bufferedImage, "png", Paths.get(imageStorageFolder, fileName).toFile());
+            if (Objects.equals(multipartFile.getContentType(), "image/jpeg")) {
+                ImageIO.write(bufferedImage, "jpg", Paths.get(imageStorageFolder, fileName).toFile());
+            } else if (Objects.equals(multipartFile.getContentType(), "image/png")) {
+                ImageIO.write(bufferedImage, "png", Paths.get(imageStorageFolder, fileName).toFile());
+            }
+
         } catch (
                 IOException e) {
             e.printStackTrace();

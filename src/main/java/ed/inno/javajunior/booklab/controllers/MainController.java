@@ -9,6 +9,7 @@ import ed.inno.javajunior.booklab.services.NewsService;
 import ed.inno.javajunior.booklab.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,5 +49,11 @@ public class MainController {
         Author author = authorRepository.findById(id).orElseThrow(NoSuchElementException::new);
         model.addAttribute("author", author);
         return "author-page";
+    }
+
+    @GetMapping("/error-file")
+    public String fileError(Principal principal, Model model) {
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
+        return "error-file";
     }
 }

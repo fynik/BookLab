@@ -37,7 +37,7 @@ public class Book {
     @ManyToOne(fetch = FetchType.EAGER)
     private Author author;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "file_id")
     private File cover;
 

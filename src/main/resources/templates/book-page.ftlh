@@ -6,6 +6,7 @@
     <div style="text-align: center">
         <input type="button" class="btn btn-dark" onclick="history.back();" value="Назад"/>
         <br>
+        <br>
         <img src="/images/${book.cover.storageName}"
              style="border-radius: 5px">
         <br>

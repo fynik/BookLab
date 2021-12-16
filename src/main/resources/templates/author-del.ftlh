@@ -1,7 +1,10 @@
 <#import "blocks/template.ftlh" as t>
 <@t.template user>
     <h2 style="text-align: center">Удаление авторов</h2><hr>
-    <table class="table table-hover table-dark">
+    <input type="button" class="btn btn-dark" onclick="history.back();" value="Назад"/>
+    <br>
+    <br>
+    <table class="table table-hover table-light">
         <tr>
             <th scope="col">Фамилия</th>
             <th scope="col">Имя</th>

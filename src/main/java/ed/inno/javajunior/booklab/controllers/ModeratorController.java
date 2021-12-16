@@ -6,6 +6,7 @@ import ed.inno.javajunior.booklab.services.AuthorService;
 import ed.inno.javajunior.booklab.services.BookService;
 import ed.inno.javajunior.booklab.services.NewsService;
 import ed.inno.javajunior.booklab.services.UserService;
+import ed.inno.javajunior.booklab.services.fileutility.FileUtilService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +29,7 @@ public class ModeratorController {
     private final AuthorService authorService;
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
+    private final FileUtilService fileUtil;
 
 
     /*
@@ -44,6 +46,9 @@ public class ModeratorController {
                              @RequestParam("file") MultipartFile multipartFile,
                              Principal principal, Model model) {
         model.addAttribute("user", userService.getUserByPrincipal(principal));
+        if (!fileUtil.checkFileTypeIsImage(multipartFile)) {
+            return "redirect:/error-file";
+        }
         if (!multipartFile.isEmpty()) {
             newsService.createNewsItem(text, multipartFile, principal);
         } else {
@@ -76,6 +81,9 @@ public class ModeratorController {
                              @RequestParam("file") MultipartFile multipartFile,
                              Principal principal, Model model) {
         model.addAttribute("user", userService.getUserByPrincipal(principal));
+        if (!fileUtil.checkFileTypeIsImage(multipartFile)) {
+            return "redirect:/error-file";
+        }
         bookService.createNewBook(title, description, pub_year, id, multipartFile);
         return "redirect:/profile";
     }
@@ -108,6 +116,9 @@ public class ModeratorController {
                                @RequestParam("birth_year") Integer birthYear,
                                @RequestParam("file") MultipartFile multipartFile,
                                Principal principal, Model model) {
+        if (!fileUtil.checkFileTypeIsImage(multipartFile)) {
+            return "redirect:/error-file";
+        }
         model.addAttribute("user", userService.getUserByPrincipal(principal));
         authorService.createNewAuthor(firstName, lastName, birthYear, multipartFile);
         return "redirect:/profile";
