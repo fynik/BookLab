@@ -32,7 +32,7 @@ public class UserController {
     @PostMapping("/registration")
     public String createUser(@RequestParam Map<String, String> regParams, Model model) {
         if (!userService.createUser(regParams)) {
-            model.addAttribute("errorMessage", "Пользователь с таким именем уже существует");
+            model.addAttribute("errorMessage", "Пользователь с таким именем или email уже существует");
             return "registration";
         }
         return "redirect:/login";

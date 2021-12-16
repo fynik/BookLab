@@ -6,8 +6,9 @@
     <div style="text-align: center">
         <input type="button" class="btn btn-dark" onclick="history.back();" value="Назад"/>
         <br>
+        <br>
         <img src="/images/${author.photo.storageName}"
-             style="border-radius: 5px">
+             style="border-radius: 5px" alt="Фото автора">
         <br>
         <br>
         <h4>${author.lastName}</h4>

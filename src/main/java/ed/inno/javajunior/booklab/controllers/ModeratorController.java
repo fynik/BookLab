@@ -6,6 +6,7 @@ import ed.inno.javajunior.booklab.services.AuthorService;
 import ed.inno.javajunior.booklab.services.BookService;
 import ed.inno.javajunior.booklab.services.NewsService;
 import ed.inno.javajunior.booklab.services.UserService;
+import ed.inno.javajunior.booklab.services.fileutility.FileUtilService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +29,7 @@ public class ModeratorController {
     private final AuthorService authorService;
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
+    private final FileUtilService fileUtil;
 
 
     /*
@@ -44,6 +46,9 @@ public class ModeratorController {
                              @RequestParam("file") MultipartFile multipartFile,
                              Principal principal, Model model) {
         model.addAttribute("user", userService.getUserByPrincipal(principal));
+        if (!fileUtil.checkFileTypeIsImage(multipartFile)) {
+            return "redirect:/error-file";
+        }
         if (!multipartFile.isEmpty()) {
             newsService.createNewsItem(text, multipartFile, principal);
         } else {
@@ -71,11 +76,14 @@ public class ModeratorController {
     @PostMapping("/moder/book_add")
     public String submitBook(@RequestParam("title") String title,
                              @RequestParam("description") String description,
-                             @RequestParam("pub_year") Integer pub_year,
+                             @RequestParam("pub_year") String pub_year,
                              @RequestParam("author") Long id,
                              @RequestParam("file") MultipartFile multipartFile,
                              Principal principal, Model model) {
         model.addAttribute("user", userService.getUserByPrincipal(principal));
+        if (!fileUtil.checkFileTypeIsImage(multipartFile)) {
+            return "redirect:/error-file";
+        }
         bookService.createNewBook(title, description, pub_year, id, multipartFile);
         return "redirect:/profile";
     }
@@ -105,9 +113,12 @@ public class ModeratorController {
     @PostMapping("/moder/author_add")
     public String submitAuthor(@RequestParam("fname") String firstName,
                                @RequestParam("lname") String lastName,
-                               @RequestParam("birth_year") Integer birthYear,
+                               @RequestParam("birth_year") String birthYear,
                                @RequestParam("file") MultipartFile multipartFile,
                                Principal principal, Model model) {
+        if (!fileUtil.checkFileTypeIsImage(multipartFile)) {
+            return "redirect:/error-file";
+        }
         model.addAttribute("user", userService.getUserByPrincipal(principal));
         authorService.createNewAuthor(firstName, lastName, birthYear, multipartFile);
         return "redirect:/profile";
@@ -124,5 +135,11 @@ public class ModeratorController {
     public String deleteAuthor(@PathVariable("id") Long id) {
         authorService.deleteAuthorById(id);
         return "redirect:/moder/author_del";
+    }
+
+    @GetMapping("/error-file")
+    public String fileError(Principal principal, Model model) {
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
+        return "error-file";
     }
 }

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class User {
 
     private String password;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.REFRESH)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false))
@@ -38,10 +39,10 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<News> news = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.REFRESH)
     @JoinTable(name = "users_books",
-            joinColumns = @JoinColumn(name = "user_id", nullable = false),
-            inverseJoinColumns = @JoinColumn(name = "book_id", nullable = false))
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id"))
     private List<Book> bookshelf = new ArrayList<>();
 
     public boolean isAdmin() {
@@ -50,9 +51,5 @@ public class User {
 
     public boolean isModer() {
         return roles.stream().map(Role::getName).anyMatch(name -> name.equals("ROLE_MODER"));
-    }
-
-    public boolean bookshelfIsEmpty() {
-        return bookshelf.isEmpty();
     }
 }

@@ -46,16 +46,6 @@
             </button>
         </form>
 
-        <#if !user.bookshelfIsEmpty()>
-            <h3 style="text-align: center">Книжная полка:</h3>
-            <hr>
-        </#if>
-        <#--        <a class="btn btn-dark mb-3" style="text-align: center; width: 100%"-->
-        <#--           href="/my/products">-->
-        <#--            Мои товары-->
-        <#--        </a>-->
-
-
         <br>
         <#if user.isModer()>
             <h3 style="text-align: center">Мои новости:</h3>

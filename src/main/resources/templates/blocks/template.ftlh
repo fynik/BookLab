@@ -15,19 +15,23 @@
     <body>
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
-            <a href="/">
+            <a href="/" class="ntd">
                 <span class="navbar-brand mb-0 h1">BOOK LAB</span>
             </a>
             <#if user.username??>
-<#--                        <div class="dropdown text-end">-->
-                    <a href="/profile">
-                        <img src="/static/images/avatar.png" alt="mdo"
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="/allbooks">Библиотека</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/bookshelf">Моя книжная полка</a>
+                </li>
+            </ul>
+                 <a href="/profile"><img src="/static/images/avatar.png" alt="mdo"
                              width="32" height="32" class="rounded-circle">
-                    </a>
-<#--                        </div>-->
+                 </a>
             <#else>
-                <button class="btn btn-light my-2 my-sm-0" type="button"
-                        onclick="window.location.href = '/login'">
+                <button class="btn btn-light my-2 my-sm-0" type="button" onclick="window.location.href = '/login'">
                     Войти
                 </button>
             </#if>

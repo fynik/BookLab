@@ -27,8 +27,8 @@ public class Author {
     @Column(name = "last_name", length = 100)
     private String lastName;
 
-    @Column(name = "birth_year")
-    private Integer birthYear;
+    @Column(name = "birth_year", length = 100)
+    private String birthYear;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "file_id")

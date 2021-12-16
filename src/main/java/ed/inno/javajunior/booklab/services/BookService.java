@@ -9,7 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.StreamSupport;
 
@@ -23,7 +25,8 @@ public class BookService {
     private final FileRepository fileRepository;
     private final AuthorRepository authorRepository;
 
-    public Object getLastBooks(int amountOfItems) {
+
+    public List<Book> getLastBooks(int amountOfItems) {
         long totalAmountOfNewsBooks = StreamSupport.stream(bookRepository.findAll().spliterator(), true).count();
         if (amountOfItems > (int) totalAmountOfNewsBooks) {
             amountOfItems = (int) totalAmountOfNewsBooks;
@@ -31,7 +34,7 @@ public class BookService {
         return bookRepository.findAllByIdNotNullOrderByAdditionDateDesc().subList(0, amountOfItems);
     }
 
-    public void createNewBook(String title, String description, Integer pub_year,
+    public void createNewBook(String title, String description, String pub_year,
                               Long id, MultipartFile file) {
         Long fileIndex = fileService.saveImage(file, 500);
         log.info("Сохранено изображение " + file.getOriginalFilename());

@@ -14,7 +14,7 @@
         </div>
         <div class="form-group">
             <label for="byear">Год рождения</label>
-            <input type="number" class="form-control" required step="1" id="byear" name="birth_year">
+            <input type="text" class="form-control" maxlength="4" id="byear" name="birth_year">
         </div>
         <h5>Добавить изображение (в формате jpg или png)</h5>
         <div class="input-group mb-3">

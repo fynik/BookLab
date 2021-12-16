@@ -2,6 +2,20 @@
 <@t.template user>
     <h3 style="text-align: center">Последние добавленные книги</h3><hr>
 
+    <div class="card-group">
+        <#list books as book>
+            <a href="/book/${book.id}" class="ntd">
+                <div class="card text-dark bg-light my-3 el-hover">
+                    <img src="/images/${book.cover.storageName}" class="card-img-top" alt="Обложка" style="height: 250px">
+                    <div class="card-body">
+                        <h5 class="card-title">${book.title}</h5>
+                        <p class="card-text">${book.author.lastName} ${book.author.firstName}</p>
+                    </div>
+                </div>
+            </a>
+        </#list>
+    </div>
+
 
 
     <h3 style="text-align: center">Последние Новости</h3><hr>
@@ -26,26 +40,5 @@
             </div>
         </div>
     </#list>
-
-
-
-<#--    <div class="card-columns">-->
-<#--        <#list books as book>-->
-<#--            <a href="/product/${product.id}" class="product-link">-->
-<#--                <div class="card text-white bg-dark my-3 product">-->
-
-<#--                    <img src="/images/${product.previewImageId}"-->
-<#--                         class="card-img-top">-->
-<#--                    <div class="card-body">-->
-<#--                        <h5 class="card-title">${product.title}</h5>-->
-<#--                        <p class="card-text">${product.price} ₽</p>-->
-<#--                    </div>-->
-<#--                    <div class="card-footer">-->
-<#--                        ${product.city}-->
-<#--                    </div>-->
-<#--                </div>-->
-<#--            </a>-->
-<#--        </#list>-->
-<#--    </div>-->
 
 </@t.template>

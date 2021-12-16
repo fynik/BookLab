@@ -21,7 +21,7 @@ public class AuthorService {
 
 
 
-    public void createNewAuthor(String firstName, String lastName, Integer birthYear,
+    public void createNewAuthor(String firstName, String lastName, String birthYear,
                                 MultipartFile file) {
         Long fileIndex = fileService.saveImage(file, 500);
         log.info("Сохранено изображение " + file.getOriginalFilename());
