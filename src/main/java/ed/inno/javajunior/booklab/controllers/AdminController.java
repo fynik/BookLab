@@ -19,15 +19,21 @@ public class AdminController {
     private final UserRepository userRepository;
 
     @GetMapping("/admin")
-    private String listUsers(Principal principal, Model model) {
+    public String listUsers(Principal principal, Model model) {
         model.addAttribute("user", userService.getUserByPrincipal(principal));
         model.addAttribute("userlist", userRepository.findAll());
         return "admin";
     }
 
     @PostMapping("/admin/user_del/{id}")
-    private String deleteUser(@PathVariable("id") Long userId) {
+    public String deleteUser(@PathVariable("id") Long userId) {
         userService.deleteUser(userId);
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/admin/user_change_status/{id}")
+    public String changeActiveStatus(@PathVariable("id") Long id) {
+        userService.changeActiveStatus(id);
         return "redirect:/admin";
     }
 }

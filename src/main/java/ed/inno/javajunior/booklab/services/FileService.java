@@ -4,6 +4,7 @@ import ed.inno.javajunior.booklab.entities.File;
 import ed.inno.javajunior.booklab.repositories.FileRepository;
 import ed.inno.javajunior.booklab.services.fileutility.FileUtilService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,6 +16,7 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class FileService {
@@ -29,7 +31,6 @@ public class FileService {
         String originalName = multipartFile.getOriginalFilename();
         String extension = originalName != null ? originalName.substring(originalName.lastIndexOf(".")) : "";
 
-
         File file = new File();
         file.setOriginalName(originalName);
         file.setMimeType(multipartFile.getContentType());
@@ -39,10 +40,9 @@ public class FileService {
         fileRepository.save(file);
 
         fileUtilService.saveFileToDisk(multipartFile, maxSize, file.getStorageName());
-
+        log.info("Файл " + originalName + " записан");
         return file.getId();
     }
-
 
     public void addImageToResponse(String fileName, HttpServletResponse response) {
         File file = fileRepository.findByStorageName(fileName);
@@ -54,6 +54,5 @@ public class FileService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }

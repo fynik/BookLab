@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -30,6 +29,8 @@ public class User {
 
     private String password;
 
+    private Boolean active;
+
     @ManyToMany(cascade = CascadeType.REFRESH)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id", nullable = false),
@@ -51,5 +52,9 @@ public class User {
 
     public boolean isModer() {
         return roles.stream().map(Role::getName).anyMatch(name -> name.equals("ROLE_MODER"));
+    }
+
+    public boolean isActive() {
+        return active;
     }
 }

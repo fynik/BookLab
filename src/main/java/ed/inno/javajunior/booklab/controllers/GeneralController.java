@@ -19,7 +19,7 @@ import java.util.NoSuchElementException;
 
 @Controller
 @RequiredArgsConstructor
-public class MainController {
+public class GeneralController {
 
     private final UserService userService;
     private final NewsService newsService;
@@ -30,8 +30,8 @@ public class MainController {
     @GetMapping("/")
     public String homePage(Principal principal, Model model) {
         model.addAttribute("user", userService.getUserByPrincipal(principal));
-        model.addAttribute("news", newsService.getLastNews(12));
-        model.addAttribute("books", bookService.getLastBooks(10));
+        model.addAttribute("news", newsService.getLastNews(10));
+        model.addAttribute("books", bookService.getLastBooks(5));
         return "index";
     }
 
