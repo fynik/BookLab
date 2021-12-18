@@ -21,7 +21,7 @@
                 <th>${book.additionDate}</th>
                 <th>
                     <form action="/moder/book_del/${book.id}" method="post">
-                        <input type="submit" class="btn btn-light" value="Удалить">
+                        <input type="submit" class="btn btn-outline-danger" value="Удалить">
                     </form>
                 </th>
                 <th><a href="/book/${book.id}">Подробная информация</a></th>

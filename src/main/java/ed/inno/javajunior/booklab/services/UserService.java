@@ -46,9 +46,11 @@ public class UserService {
         user.setUsername(username);
         user.setEmail(regParams.get("email"));
         user.setPassword(passwordEncoder.encode(regParams.get("password")));
+        user.setActive(true);
         user.getRoles().add(roleRepository.findByName("ROLE_USER").
                 orElseThrow(() -> new NoSuchElementException("В системе не установлена роль пользователя")));
         userRepository.save(user);
+        log.info("Пользователь " + username + " создан");
         return true;
     }
 
@@ -58,6 +60,11 @@ public class UserService {
         log.info("Пользователь " + user.getUsername() + " удален");
     }
 
+    public void changeActiveStatus(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(NoSuchElementException::new);
+        user.setActive(!user.isActive());
+        userRepository.save(user);
+    }
 
     public void addBookToUser(Principal principal, Long bookId) {
         User user = getUserByPrincipal(principal);

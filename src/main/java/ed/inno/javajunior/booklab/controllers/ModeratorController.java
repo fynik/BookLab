@@ -69,7 +69,7 @@ public class ModeratorController {
     @GetMapping("/moder/book_add")
     public String createBook(Principal principal, Model model) {
         model.addAttribute("user", userService.getUserByPrincipal(principal));
-        model.addAttribute("authors", authorRepository.findAll());
+        model.addAttribute("authors", authorRepository.findAllByIdNotNullOrderByLastName());
         return "book-add";
     }
 

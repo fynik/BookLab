@@ -19,7 +19,7 @@
                 <th>${author.birthYear}</th>
                 <th>
                     <form action="/moder/author_del/${author.id}" method="post">
-                        <input type="submit" class="btn btn-light" value="Удалить">
+                        <input type="submit" class="btn btn-outline-danger" value="Удалить">
                     </form>
                 </th>
                 <th><a href="/author/${author.id}">Подробная информация</a></th>
