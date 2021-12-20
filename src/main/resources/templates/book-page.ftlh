@@ -3,7 +3,7 @@
     <h2 style="text-align: center">Информация о книге</h2>
     <hr>
     <br>
-    <#if userHasBook??>
+    <#if userHasBook == true>
         <div style="text-align: center">
             <input type="button" class="btn btn-dark" onclick="history.back();" value="Назад"/>
         </div>
