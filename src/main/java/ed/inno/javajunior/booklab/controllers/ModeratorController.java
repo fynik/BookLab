@@ -77,14 +77,12 @@ public class ModeratorController {
     public String submitBook(@RequestParam("title") String title,
                              @RequestParam("description") String description,
                              @RequestParam("pub_year") String pub_year,
-                             @RequestParam("author") Long id,
-                             @RequestParam("file") MultipartFile multipartFile,
-                             Principal principal, Model model) {
-        model.addAttribute("user", userService.getUserByPrincipal(principal));
+                             @RequestParam("authorId") Long authorId,
+                             @RequestParam("file") MultipartFile multipartFile) {
         if (!fileUtil.checkFileTypeIsImage(multipartFile)) {
             return "redirect:/error-file";
         }
-        bookService.createNewBook(title, description, pub_year, id, multipartFile);
+        bookService.createNewBook(title, description, pub_year, authorId, multipartFile);
         return "redirect:/profile";
     }
 
@@ -114,12 +112,10 @@ public class ModeratorController {
     public String submitAuthor(@RequestParam("fname") String firstName,
                                @RequestParam("lname") String lastName,
                                @RequestParam("birth_year") String birthYear,
-                               @RequestParam("file") MultipartFile multipartFile,
-                               Principal principal, Model model) {
+                               @RequestParam("file") MultipartFile multipartFile) {
         if (!fileUtil.checkFileTypeIsImage(multipartFile)) {
             return "redirect:/error-file";
         }
-        model.addAttribute("user", userService.getUserByPrincipal(principal));
         authorService.createNewAuthor(firstName, lastName, birthYear, multipartFile);
         return "redirect:/profile";
     }

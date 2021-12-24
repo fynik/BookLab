@@ -34,7 +34,7 @@ public class BookService {
     }
 
     public void createNewBook(String title, String description, String pub_year,
-                              Long id, MultipartFile file) {
+                              Long authorId, MultipartFile file) {
         Long fileIndex = fileService.saveImage(file, 500);
         log.info("Сохранено изображение " + file.getOriginalFilename());
 
@@ -44,7 +44,7 @@ public class BookService {
         book.setDescription(description);
         book.setCover(fileRepository.findById(fileIndex).orElseThrow(NoSuchElementException::new));
         book.setPublishedYear(pub_year);
-        book.setAuthor(authorRepository.findById(id).orElseThrow(NoSuchElementException::new));
+        book.setAuthor(authorRepository.findById(authorId).orElseThrow(NoSuchElementException::new));
         bookRepository.save(book);
         log.info("Сохранена книга \"" + book.getTitle() + "\"");
     }
