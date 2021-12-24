@@ -31,7 +31,7 @@ public class GeneralController {
     public String homePage(Principal principal, Model model) {
         model.addAttribute("user", userService.getUserByPrincipal(principal));
         model.addAttribute("news", newsService.getLastNews(10));
-        model.addAttribute("books", bookService.getLastBooks(5));
+        model.addAttribute("books", bookService.getLastBooks(6));
         return "index";
     }
 

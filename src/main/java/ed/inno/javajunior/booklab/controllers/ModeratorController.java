@@ -42,17 +42,19 @@ public class ModeratorController {
     }
 
     @PostMapping("/moder/news_add")
-    public String submitNews(@RequestParam("text") String text,
+    public String submitNews(@RequestParam("title") String title,
+                             @RequestParam("text") String text,
                              @RequestParam("file") MultipartFile multipartFile,
                              Principal principal, Model model) {
         model.addAttribute("user", userService.getUserByPrincipal(principal));
-        if (!fileUtil.checkFileTypeIsImage(multipartFile)) {
-            return "redirect:/error-file";
-        }
+
         if (!multipartFile.isEmpty()) {
-            newsService.createNewsItem(text, multipartFile, principal);
+            if (!fileUtil.checkFileTypeIsImage(multipartFile)) {
+                return "redirect:/error-file";
+            }
+            newsService.createNewsItem(title, text, multipartFile, principal);
         } else {
-            newsService.createNewsItem(text, principal);
+            newsService.createNewsItem(title, text, principal);
         }
         return "redirect:/profile";
     }
@@ -77,7 +79,7 @@ public class ModeratorController {
     public String submitBook(@RequestParam("title") String title,
                              @RequestParam("description") String description,
                              @RequestParam("pub_year") String pub_year,
-                             @RequestParam("authorId") Long authorId,
+                             @RequestParam("author") Long authorId,
                              @RequestParam("file") MultipartFile multipartFile) {
         if (!fileUtil.checkFileTypeIsImage(multipartFile)) {
             return "redirect:/error-file";
