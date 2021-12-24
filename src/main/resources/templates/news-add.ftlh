@@ -5,6 +5,11 @@
     <br>
     <form action="/moder/news_add" method="post" enctype="multipart/form-data">
         <div class="form-group">
+            <div class="form-group">
+                <label for="title">Заголовок новости</label>
+                <input type="text" class="form-control" required autofocus id="title" name="title">
+            </div>
+            <br>
             <div class="input-group">
                 <span class="input-group-text">Текст новости</span>
                 <textarea rows="10" class="form-control" aria-label="With textarea" name="text" required></textarea>
