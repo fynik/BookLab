@@ -22,7 +22,7 @@
                         ${r.getName()}<br>
                     </#list>
                 <th>
-                    <#if u.isActive() == true>
+                    <#if u.getActive() == true>
                         Active
                     <#else>
                         Banned

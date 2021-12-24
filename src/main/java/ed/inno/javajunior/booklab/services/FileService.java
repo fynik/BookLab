@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -51,6 +52,7 @@ public class FileService {
 
         try {
             Files.copy(Paths.get(imageStorageFolder, file.getStorageName()), response.getOutputStream());
+            response.flushBuffer();
         } catch (IOException e) {
             e.printStackTrace();
         }
