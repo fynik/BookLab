@@ -62,7 +62,7 @@ public class UserService {
 
     public void changeActiveStatus(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(NoSuchElementException::new);
-        user.setActive(!user.isActive());
+        user.setActive(!user.getActive());
         userRepository.save(user);
     }
 

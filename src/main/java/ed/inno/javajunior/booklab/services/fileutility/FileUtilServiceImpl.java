@@ -34,7 +34,6 @@ public class FileUtilServiceImpl implements FileUtilService {
             } else if (Objects.equals(multipartFile.getContentType(), "image/png")) {
                 ImageIO.write(bufferedImage, "png", Paths.get(imageStorageFolder, fileName).toFile());
             }
-
         } catch (
                 IOException e) {
             e.printStackTrace();

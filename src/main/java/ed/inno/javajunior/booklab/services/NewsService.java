@@ -27,12 +27,13 @@ public class NewsService {
     private final FileRepository fileRepository;
 
 
-    public void createNewsItem(String text, MultipartFile file, Principal principal) {
+    public void createNewsItem(String title, String text, MultipartFile file, Principal principal) {
         User user = userRepository.findByUsername(principal.getName()).orElseThrow(NoSuchElementException::new);
         Long fileIndex = fileService.saveImage(file, 250);
         log.info("Сохранено изображение " + file.getOriginalFilename());
 
         News newsItem = new News();
+        newsItem.setTitle(title);
         newsItem.setContent(text);
         newsItem.setPublished(LocalDateTime.now());
         newsItem.setUser(user);
@@ -41,10 +42,11 @@ public class NewsService {
         log.info("Сохранена новость под ID" + newsItem.getId() + " для пользователя " + user.getUsername());
     }
 
-    public void createNewsItem(String text, Principal principal) {
+    public void createNewsItem(String title, String text, Principal principal) {
         User user = userRepository.findByUsername(principal.getName()).orElseThrow(NoSuchElementException::new);
 
         News newsItem = new News();
+        newsItem.setTitle(title);
         newsItem.setContent(text);
         newsItem.setPublished(LocalDateTime.now());
         newsItem.setUser(user);

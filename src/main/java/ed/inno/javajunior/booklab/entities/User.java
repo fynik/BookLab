@@ -1,9 +1,6 @@
 package ed.inno.javajunior.booklab.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -54,7 +51,4 @@ public class User {
         return roles.stream().map(Role::getName).anyMatch(name -> name.equals("ROLE_MODER"));
     }
 
-    public boolean isActive() {
-        return active;
-    }
 }
